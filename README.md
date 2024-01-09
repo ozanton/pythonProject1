@@ -1,1 +1,1 @@
-# pythonProject1
+# pythonProject1 - parsing weather
