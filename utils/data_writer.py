@@ -1,8 +1,8 @@
-from options_reader import OptionsReader
-from weather_classes import WeatherAPI
+from utils.options_reader import OptionsReader
+from utils.weather_classes import WeatherAPI
 import config.config as cfg
 import csv
-from data_parser import DataParser
+from utils.data_parser import DataParser
 
 class DataWriter:
     def __init__(self, file_path, options_reader):

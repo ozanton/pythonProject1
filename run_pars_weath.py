@@ -34,23 +34,12 @@ import json
 #     print(weather_data)
 
 
-# #!!!!! сщздаем конфиг окружения
-# import subprocess
-#
-# # список установленных пакетов
-# installed_packages = subprocess.check_output(['pip', 'freeze']).decode('utf-8').split('\n')
-#
-# # записываем список пакетов в файл
-# with open('requirements.txt', 'w') as f:
-#     for package in installed_packages:
-#         f.write(package + '\n')
-
 import config.config as cfg
-from weather_classes import WeatherAPI
-from options_reader import OptionsReader
-from date_filter import *
-from request_sender import RequestSender
-from data_writer import DataWriter
+from utils.weather_classes import WeatherAPI  # Исправлено имя папки
+from utils.options_reader import OptionsReader
+from utils.date_filter import *
+from utils.request_sender import RequestSender
+from utils.data_writer import DataWriter
 
 weather_api = WeatherAPI(cfg.api_key)
 options_reader = OptionsReader('cities.yaml')
@@ -61,7 +50,6 @@ cities = options_reader.get_cities()
 
 request_sender = RequestSender(cfg.api_key)
 
-
 # данные о погоде для каждого города
 for city in cities:
     # параметры для запроса
@@ -70,6 +58,6 @@ for city in cities:
     data = request_sender.get_weather(city, start_date, end_date)
     # фильтр по дате
     filtered_data = date_filter.filter(data)
-    # Записываем в CSV-файл
+    # записываем в CSV-файл
     data_writer = DataWriter('weather.csv', options_reader)
     data_writer.write_data_to_csv(city, filtered_data)
