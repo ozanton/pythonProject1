@@ -1,11 +1,18 @@
 import requests
-import config.config as cfg
-import json
-from config.config import WeatherAPI
 
 class RequestSender:
-    def __init__(self, api_key):
-        self.weather_api = WeatherAPI(api_key)
+    def __init__(self):
+        pass
 
-    def get_weather(self, location, start_date, end_date):
-        return self.weather_api.get_weather(location, start_date, end_date)
+    def send_get_request(self, url, params=None):
+
+        try:
+            response = requests.get(url, params=params)
+            if response.status_code == 200:
+                return response.json()
+            else:
+                print(f"Ошибка при выполнении GET запроса. Статус код: {response.status_code}")
+                return None
+        except requests.exceptions.RequestException as e:
+            print(f"Ошибка при выполнении GET запроса: {e}")
+            return None

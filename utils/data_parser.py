@@ -1,19 +1,27 @@
-import json
-
 class DataParser:
     def __init__(self, data):
-        # строка в словарь
-        if isinstance(data, str):
-            try:
-                self.data = json.loads(data)
-            except json.JSONDecodeError:
-                self.data = {}
-        else:
-            self.data = data
+        self.data = data
 
-    def parse(self):
-        location = self.data.get('location', {}).get('name', '')
-        date = self.data.get('current', {}).get('last_updated', '')
-        temperature = self.data.get('current', {}).get('temp_c', '')
-        description = self.data.get('current', {}).get('condition', {}).get('text', '')
-        return {'Location': location, 'Date': date, 'Temperature': temperature, 'Description': description}
+    def get_city(self):
+        return self.data['location']['name']
+
+    def get_temp_c(self):
+        return self.data['current']['temp_c']
+
+    def get_humidity(self):
+        return self.data['current']['humidity']
+
+    def get_wind_kph(self):
+        return self.data['current']['wind_kph']
+
+    def get_wind_degree(self):
+        return self.data['current']['wind_degree']
+
+    def get_last_updated(self):
+        return self.data['current']['last_updated']
+
+    def get_last_updated_epoch(self):
+        return int(self.data['current']['last_updated_epoch'])
+
+    def get_cloud(self):
+        return self.data['current']['cloud']

@@ -1,14 +1,17 @@
-import requests
-import json
 
-api_key = '2ea065df301249e1a6b154936240701'
+cities_file = 'config/cities.yaml'
 
-class WeatherAPI:
-    def __init__(self, api_key):
-        self.api_key = api_key
+api_url = 'https://api.weatherapi.com/v1/current.json'
 
-    def get_weather(self, location, start_date, end_date):
-        url = f"https://api.weatherapi.com/v1/history.json?key={self.api_key}&q={location}&dt={start_date}&end_dt={end_date}"
-        response = requests.get(url)
-        data = json.loads(response.text)
-        return data
+
+#echo $API_KEY
+
+
+# import os
+#
+# api_key = os.environ.get('API_KEY')
+#
+# if api_key:
+#     print(api_key)
+# else:
+#     print('Переменная среды API_KEY не установлена')
