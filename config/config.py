@@ -3,6 +3,7 @@ cities_file = 'config/cities.yaml'
 
 api_url = 'https://api.weatherapi.com/v1/current.json'
 
+api_url_f = 'https://api.weatherapi.com/v1/forecast.json'
 
 #echo $API_KEY
 

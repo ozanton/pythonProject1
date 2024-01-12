@@ -49,7 +49,7 @@ df.to_csv('weather.csv', index=False)
 # =========================================================
 # прогноз
 #
- # import requests,json, datetime, pandas as pd
+
  #
  # cities = ['Berlin', 'Belgrade', 'Novi Sad']
  # url = 'http://api.weatherapi.com/v1/forecast.json?key=2ea065df301249e1a6b154936240701&days=3&q='

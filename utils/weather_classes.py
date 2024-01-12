@@ -1,5 +1,6 @@
 import requests
 from config.config import api_url
+import datetime
 
 class Weather:
     """Атрибуты:
@@ -125,4 +126,74 @@ class WeatherAPI:
 #weather = weather_api.get_weather("Novi Sad")
 #print(weather)
 
+class ForecastWeather:
+    """Атрибуты:
+        forecast_data: Данные прогноза погоды в формате JSON включают в себя следующие поля:
+
+        * date: Дата
+        * day: День недели
+        * high: Максимальная температура
+        * low: Минимальная температура
+        * text: Описание погоды
+        * icon: Иконка погоды
+        * precip: Осадки
+        * humidity: Влажность
+        * wind_speed: Скорость ветра
+        * wind_gust: Порывы ветра
+        * cloud_cover: Облачность
+        * uv_index: Индекс ультрафиолетового излучения
+        * alerts: Предупреждения о погодных явлениях
+    """
+
+    def __init__(self, city, forecast_data):
+        self.city = city
+        self.forecast_data = forecast_data
+
+    def __str__(self):
+        return f"Прогноз погоды для города {self.city}\n\n" + "\n".join(
+            f"{date}: {day} | {high}°C / {low}°C | {text} | {icon}"
+            for date, day, high, low, text, icon in self.forecast_data
+        )
+
+    @classmethod
+    def get_forecast_weather(cls, api_key, city):
+        url = f"{api_url}?key={api_key}&q={city}&days=3&aqi=yes&alerts=yes"
+        response = requests.get(url)
+        if response.status_code == 200:
+            res = response.json()
+            return cls(city, res['forecast']['forecastday'])
+        else:
+            raise Exception(f"Ошибка при получении данных о погоде для города {city}: {response.status_code}")
+
+    def get_hourly_forecast(self):
+        """Возвращает почасовой прогноз в виде списка словарей."""
+        hourly_forecast = []
+        for forecast_day in self.forecast_data:
+            for hour in forecast_day['hour']:
+                data = {
+                    'city': self.city,
+                    'hour': hour['time'],
+                    'temp_c': hour['temp_c'],
+                    'wind_kph': hour['wind_kph'],
+                    'cloud': hour['cloud']
+                }
+                hourly_forecast.append(data)
+        return hourly_forecast
+
+    def get_four_hourly_forecast(self):
+        """Возвращает прогноз погоды с интервалом в 4 часа в виде списка словарей."""
+        four_hourly_forecast = []
+        for forecast_day in self.forecast_data:
+            for hour in forecast_day['hour']:
+                hour_time = datetime.datetime.strptime(hour['time'], '%Y-%m-%d %H:%M').hour  # в число
+                if hour_time % 4 == 0:
+                    data = {
+                        'city': self.city,
+                        'hour': hour['time'],
+                        'temp_c': hour['temp_c'],
+                        'wind_kph': hour['wind_kph'],
+                        'cloud': hour['cloud']
+                    }
+                    four_hourly_forecast.append(data)
+        return four_hourly_forecast
 
