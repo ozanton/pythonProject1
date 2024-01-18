@@ -11,7 +11,17 @@ api_url_f = 'https://api.weatherapi.com/v1/forecast.json'
 # import os
 #
 # api_key = os.environ.get('API_KEY')
+
+# host = os.environ.get('HOST')
+
+# port = os.environ.get('PORT')
 #
+# database = os.environ.get('DATABASE')
+#
+# user = os.environ.get('USER')
+#
+# password = os.environ.get('PASSWORD')
+
 # if api_key:
 #     print(api_key)
 # else:
