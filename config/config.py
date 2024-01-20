@@ -5,6 +5,28 @@ api_url = 'https://api.weatherapi.com/v1/current.json'
 
 api_url_f = 'https://api.weatherapi.com/v1/forecast.json'
 
+current_table_name = "weatherapi_current"
+
+forecast_table_name = "weatherapi_forecast"
+
+CURRENT_TABLE_COLUMNS = [
+    "city",
+    "time",
+    "temp_c",
+    "humidity",
+    "wind_kph",
+    "wind_direction",
+    "cloud",
+]
+
+FORECAST_TABLE_COLUMNS = [
+    "city",
+    "hour",
+    "temp_c",
+    "wind_kph",
+    "cloud",
+]
+
 #echo $API_KEY
 
 

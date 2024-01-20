@@ -1,7 +1,9 @@
 import csv
-import psycopg2
+from config.config import current_table_name, CURRENT_TABLE_COLUMNS
+
 
 class DataWriter:
+
     def __init__(self, filename):
         self.filename = filename
 
@@ -11,7 +13,9 @@ class DataWriter:
             writer.writerow(data.columns)
             writer.writerows(data.to_numpy().tolist())
 
+
 class DataWriterToDb(DataWriter):
+
     def __init__(self, filename, conn):
         super().__init__(filename)
         self.conn = conn
@@ -26,7 +30,7 @@ class DataWriterToDb(DataWriter):
             cursor = self.conn.cursor()
             cursor.executemany(
                 """
-                INSERT INTO weatherapi_current (city, time, temp_c, humidity, wind_kph, wind_direction, cloud)
+                INSERT INTO {} ({})
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
                 ON CONFLICT (city, time) DO UPDATE
                 SET temp_c = EXCLUDED.temp_c,
@@ -34,10 +38,7 @@ class DataWriterToDb(DataWriter):
                     wind_kph = EXCLUDED.wind_kph,
                     wind_direction = EXCLUDED.wind_direction,
                     cloud = EXCLUDED.cloud
-                """,
+                """.format(current_table_name, ','.join(CURRENT_TABLE_COLUMNS)),
                 data_as_tuples,
             )
-
             self.conn.commit()
-
-

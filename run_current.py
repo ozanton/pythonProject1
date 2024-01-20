@@ -1,14 +1,13 @@
 import pandas as pd
 from utils.options_reader import OptionsReader
 from config.weatherapi import api_key
-from config.weatherapi import host, port, database, user, password
 from config.config import cities_file, api_url
-from utils.weather_classes import WeatherAPI, CurrentWeather
+from utils.weather_classes import WeatherAPI
 from datetime import datetime
 from utils.request_sender import RequestSender
 from utils.data_parser import DataParser
 from utils.data_writer import DataWriterToDb
-import psycopg2
+from utils.database_connector import DatabaseConnector
 
 final_res = []
 
@@ -46,16 +45,11 @@ print(final_res)  # отладка
 df = pd.DataFrame(final_res)
 
 # коннект к бд
-conn = psycopg2.connect(
-    host=host,
-    port=port,
-    database=database,
-    user=user,
-    password=password,
-)
+db = DatabaseConnector()
+conn = db.connect()
 
-# Создаем объект DataWriterToDb для записи в файл
+# cоздаем объект DataWriterToDb для записи в файл
 dw = DataWriterToDb("weather_current.csv", conn)
 
-# Записываем данные в файл
+# записываем данные в файл
 dw.write_data(df)
