@@ -10,7 +10,7 @@ current_table_name = "weatherapi_current"
 forecast_table_name = "weatherapi_forecast"
 
 CURRENT_TABLE_COLUMNS = [
-    "city",
+    "id_city",
     "time",
     "temp_c",
     "humidity",
@@ -20,7 +20,7 @@ CURRENT_TABLE_COLUMNS = [
 ]
 
 FORECAST_TABLE_COLUMNS = [
-    "city",
+    "id_city",
     "hour",
     "temp_c",
     "wind_kph",
