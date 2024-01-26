@@ -29,7 +29,7 @@ request_sender = RequestSender()
 
 for city in cities:
     try:
-        # Используем get_close_matches для поиска наилучшего совпадения
+        # get_close_matches для поиска наилучшего совпадения
         matches = get_close_matches(city, cities_map.values())
         if matches:
             matched_city = matches[0]
@@ -63,7 +63,7 @@ for city in cities:
     except Exception as e:
         print(f"Ошибка для {city}: {e}")
 
-# Вывод промежуточных результатов
+# промежуточныe результаты
 for i, entry in enumerate(draft_res):
     print(f"Промежуточные результаты {i + 1}: {entry}")
 
@@ -96,10 +96,11 @@ except Exception as e:
     print(f"Ошибка при создании записи в файл: {e}")
 
 finally:
-        # Закрытие соединения с БД
-    try:
-        if conn:
+    # закрытие коннекта с БД
+    if conn:
+        try:
+            conn.cursor()
             conn.close()
             print("Соединение с БД закрыто")
-    except Exception as e:
-        print(f"Ау! Эй, форточку то закрой! По полу тянет!: {e}")
+        except Exception:
+            print("Соединение с БД уже закрыто")
