@@ -1,4 +1,4 @@
-import psycopg2
+import pg8000
 from config.weatherapi import host, port, database, user, password
 
 class DatabaseConnector:
@@ -11,10 +11,10 @@ class DatabaseConnector:
         self.password = password
 
     def connect(self):
-        return psycopg2.connect(
+        return pg8000.connect(
             host=self.host,
             port=self.port,
             database=self.database,
             user=self.user,
-            password=self.password,
+            password=self.password
         )

@@ -94,3 +94,12 @@ try:
     print("Запись в файл успешно создана")
 except Exception as e:
     print(f"Ошибка при создании записи в файл: {e}")
+
+finally:
+        # Закрытие соединения с БД
+    try:
+        if conn:
+            conn.close()
+            print("Соединение с БД закрыто")
+    except Exception as e:
+        print(f"Ау! Эй, форточку то закрой! По полу тянет!: {e}")
