@@ -57,10 +57,10 @@ class CitiesWithIds:
 
     def get_cities_with_ids(self):
         cur = self.conn.cursor()
-        cur.execute("SELECT id_city, name_city FROM dict_cities")  # Извлечение ID и имени
+        cur.execute("SELECT id_city, name_city FROM dict_cities")  # извлечение ID и имени
         cities = dict(cur.fetchall())
 
-        # Добавление всех городов в словарь, избегая дубликатов имен
+        # города в словарь, избегая дубликатов имен
         for city_name in cities:  # Итерация по ключам словаря (имена городов)
             if city_name not in cities:  # Проверка, существует ли ключ уже
                 cities[city_name] = cities[city_name] + 1  # Если нет, добавляем город с ID

@@ -21,17 +21,17 @@ class OptionsReaderDb:
         # коннект к БД
         with DatabaseConnector().connect() as conn:
 
-            # Выполнение запроса
+            # запрос
             cur = conn.cursor()
             cur.execute("select name_city from dict_cities")
 
-            # Получение результатов
+            # получение результата
             cities = [row[0] for row in cur]
 
         return cities
 
 def main():
-    # Пример использования OptionsReaderDb
+
     reader_db = OptionsReaderDb()
     cities = reader_db.cities_from_db()
     print(cities)

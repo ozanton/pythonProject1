@@ -9,6 +9,7 @@ from utils.data_parser import DataParser
 from utils.data_writer import DataWriterToDb, CitiesWithIds
 from utils.database_connector import DatabaseConnector
 from difflib import get_close_matches
+import os
 
 draft_res = []
 
@@ -85,8 +86,14 @@ try:
 except Exception as e:
     print(f"Ошибка при подключении к БД: {e}")
 
-# cоздаем объект DataWriterToDb для записи в файл
-dw = DataWriterToDb("weather_current.csv", conn)
+# есть ли папка
+if not os.path.exists("./resultcurrent_to_base"):
+    os.mkdir("./resultcurrent_to_base")
+
+# cоздаем объект DataWriterToDb
+dw = DataWriterToDb(
+    f"./resultcurrent_to_base/{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.csv", conn
+)
 
 # проверки при создании записи в файл
 try:
