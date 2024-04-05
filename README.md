@@ -1,1 +1,1 @@
-# pythonProject1 - parsing weather
+# weather api - parsing weather - current data about weather 
